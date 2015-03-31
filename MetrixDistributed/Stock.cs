@@ -18,11 +18,25 @@ namespace MetrixDistributed
         private int quantityInvo;
         private int balance;
 
+
+        public int productId
+        {
+            get 
+            {
+                return proid;
+            }
+            set
+            {
+                proid = value;
+            }
+        }
+        
+        
         public int proInvo
         {
             get
             {
-                return this.proidInvo;
+                return proidInvo;
             }
             set
             {
@@ -34,7 +48,7 @@ namespace MetrixDistributed
         {
             get
             {
-                return this.quantityInvo;
+                return quantityInvo;
             }
             set
             {
@@ -46,7 +60,7 @@ namespace MetrixDistributed
         {
             get
             {
-                return this.id;
+                return id;
             }
             set
             {
@@ -57,7 +71,7 @@ namespace MetrixDistributed
         {
             get
             {
-                return this.proid;
+                return proid;
             }
             set
             {
@@ -68,7 +82,7 @@ namespace MetrixDistributed
         {
             get
             {
-                return this.instock;
+                return instock;
             }
             set
             {
@@ -79,7 +93,7 @@ namespace MetrixDistributed
         {
             get
             {
-                return this.relevel;
+                return relevel;
             }
             set
             {
@@ -90,7 +104,7 @@ namespace MetrixDistributed
         {
             get
             {
-                return this.requan;
+                return requan;
             }
             set
             {
@@ -101,12 +115,18 @@ namespace MetrixDistributed
         {
             get
             {
-                return this.orderer;
+                return orderer;
             }
             set
             {
                 orderer = value;
             }
+        }
+
+        public int setBalance
+        {
+            get { return balance; }
+            set { balance = value; }
         }
     }
 }

@@ -80,4 +80,27 @@ namespace MetrixDistributed
         [OperationContract]
         Supplier SupplierSearch(int supplierId);
     }
+
+    [ServiceContract]
+    public interface IStockServices
+    {
+        [OperationContract]
+        int StockSave(Stock stock);
+
+        [OperationContract]
+        int SupplierUpdate(Stock stock);
+
+        [OperationContract]
+        int StockDelete(Stock stock);
+
+        [OperationContract]
+        Stock StockSearch(int stockid);
+
+        //search in stock level
+        [OperationContract]
+        Stock SearchInStock();
+
+        [OperationContract]
+        void UpdateInvoiceByStock(Stock stock);
+    }
 }

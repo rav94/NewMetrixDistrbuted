@@ -13,7 +13,7 @@ namespace MetrixDistributed
         private string empContact;
         private string empAdLine1;
         private string empAdLine2;
-        private string empDob;
+        private DateTime empDob;
         private string empNic;
         private string empPos;
         private string empDept;
@@ -81,7 +81,7 @@ namespace MetrixDistributed
         }
 
 
-        public string empDobValue
+        public DateTime empDobValue
         {
             get
             {

@@ -6,16 +6,14 @@ using System.ServiceModel;
 using MySql.Data.MySqlClient;
 using System.Text;
 using System.Data;
+using System.Windows.Forms;
 
 namespace MetrixDistributed
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "MetrixDistributedService" in both code and config file together.
-    public class MetrixDistributedService : IMetrixDistributedService, ICustomerServices, IEmployeeServices, IProductServices, ISupplierServices
+    public class MetrixDistributedService : IMetrixDistributedService, ICustomerServices, IEmployeeServices, IProductServices, ISupplierServices, IStockServices
     {
-
-        DatabaseConnection db;
-        DataTable table;
-
+        DatabaseConnection db = new DatabaseConnection();
         public int CustomerSave(Customer customer)
         {
             MySqlCommand cmd = new MySqlCommand();
@@ -92,7 +90,7 @@ namespace MetrixDistributed
             employee.empContactValue = table.Rows[0][2].ToString();
             employee.empAdLine1Value = table.Rows[0][3].ToString();
             employee.empAdLine2Value = table.Rows[0][4].ToString();
-            employee.empDobValue = table.Rows[0][5].ToString();
+            employee.empDobValue = Convert.ToDateTime(table.Rows[0][5].ToString());
             employee.empNicValue = table.Rows[0][6].ToString();
             employee.empPosValue = table.Rows[0][7].ToString();
             employee.empDeptValue = table.Rows[0][8].ToString();
@@ -168,7 +166,7 @@ namespace MetrixDistributed
             Supplier supplier = new Supplier();
             DatabaseConnection db = new DatabaseConnection();
 
-            string sql = "SELECT * FROM supplier WHERE SupplierId = '"+supplier.supIdValue+"'";
+            string sql = "SELECT * FROM supplier WHERE SupplierId = '" + supplierId + "'";
             DataTable table = db.SearchQuery(sql);
             supplier.companyNameValue = table.Rows[0][1].ToString();
             supplier.contactValue = table.Rows[0][2].ToString();
@@ -179,17 +177,6 @@ namespace MetrixDistributed
 
             return supplier;
         }
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         //public int ForeignSupplierSave(ForeignSupplier fsupplier)
         //{
         //    MySqlCommand cmd = new MySqlCommand();
@@ -228,5 +215,82 @@ namespace MetrixDistributed
         //    return fsupplier;
 
         //}
+
+        public int StockSave(Stock stock)
+        {
+            MySqlCommand cmd = new MySqlCommand();
+            string sql = "INSERT INTO stock(ProductId,InStock,ReorderLevel,ReorderQuantity,Ordered) VALUES( '" + stock.productId + "','" + stock.Sinstock + "','" + stock.Srelevel + "','" + stock.Squan + "','" + stock.Sordered + "')";
+
+            return new DatabaseConnection().Query(sql);
+        }
+
+        public int SupplierUpdate(Stock stock)
+        {
+            MySqlCommand cmd = new MySqlCommand();
+            string sql = "UPDATE `metrix`.`stock` SET `InStock` = '" + stock.Sinstock + "', `ReorderLevel` = '" + stock.Srelevel + "', `ReorderQuantity` = '" + stock.Squan + "', `Ordered` = '" + stock.Sordered + "' WHERE `stock`.`ProductId` = '" + stock.productId + "' ;";
+
+            return new DatabaseConnection().Query(sql);
+        }
+
+        public int StockDelete(Stock stock)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Stock StockSearch(int stockid)
+        {
+            Stock stock = new Stock();
+            DatabaseConnection db = new DatabaseConnection();
+
+            string sql = "SELECT * FROM stock WHERE ProductId = '" + stockid + "' ";
+            DataTable table = db.SearchQuery(sql);
+            stock.Sinstock = Convert.ToInt16(table.Rows[0][1].ToString());
+            stock.Srelevel = Convert.ToInt16(table.Rows[0][2].ToString());
+            stock.Squan = Convert.ToInt16(table.Rows[0][3].ToString());
+            stock.Sordered = Convert.ToInt16(table.Rows[0][4].ToString());
+
+            return stock;
+        }
+
+        public Stock SearchInStock()
+        {
+            Stock stock = new Stock();
+            DatabaseConnection db = new DatabaseConnection();
+
+            string sql = "SELECT `InStock`, `ReorderLevel` FROM `stock` WHERE `ProductId` = '" + stock.proInvo + "' ";
+
+            DataTable table = db.SearchQuery(sql);
+            stock.Sinstock = Convert.ToInt16(table.Rows[0][1].ToString());
+            stock.Srelevel = Convert.ToInt16(table.Rows[0][2].ToString());
+
+            return stock;
+
+        }
+
+        public void UpdateInvoiceByStock(Stock stock)  //sucking error shit !!!
+        {
+            SearchInStock();
+
+            stock.setBalance = stock.Sinstock - stock.quanInvo; //set balance
+
+            //message for reorder level
+            if (stock.setBalance <= stock.Srelevel)
+            {
+                MessageBox.Show("Stock balance is getting low. Order new products");
+            }
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                string sql = "UPDATE `stock` SET `InStock`='" + stock.setBalance + "',`ReorderLevel`='" + stock.Srelevel + "',`ReorderQuantity`='" + stock.Squan + "',`Ordered`='" + stock.Sordered + "' WHERE `ProductId`='" + stock.proInvo + "' ";
+
+                new DatabaseConnection().Query(sql);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error" + ex);
+            }   
+        }
     }
 }
