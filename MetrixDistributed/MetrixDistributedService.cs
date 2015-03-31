@@ -10,7 +10,7 @@ using System.Data;
 namespace MetrixDistributed
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "MetrixDistributedService" in both code and config file together.
-    public class MetrixDistributedService : IMetrixDistributedService, ICustomerService, IEmployeeService, IProductService, ISupplierService
+    public class MetrixDistributedService : IMetrixDistributedService, ICustomerServices, IEmployeeServices, IProductServices, ISupplierServices
     {
 
         DatabaseConnection db;
@@ -142,45 +142,91 @@ namespace MetrixDistributed
             return product;
         }
 
-
-
-        public int ForeignSupplierSave(ForeignSupplier fsupplier)
+        public int SupplierSave(Supplier supplier)
         {
             MySqlCommand cmd = new MySqlCommand();
-            string sql = "INSERT INTO supplier VALUES('" + fsupplier.supIdValue + "','" + fsupplier.companyNameValue + "','" + fsupplier.contactValue + "', '" + fsupplier.add + "', '" + fsupplier.countryValue + "', '" + fsupplier.emailValue + "', '" + fsupplier.refNameValue + "') ";
+            string sql = "INSERT INTO supplier VALUES('" + supplier.supIdValue + "','" + supplier.companyNameValue + "','" + supplier.contactValue + "', '" + supplier.add + "', '" + supplier.countryValue + "', '" + supplier.emailValue + "', '" + supplier.refNameValue + "') ";
 
             return new DatabaseConnection().Query(sql);
         }
 
-        public int ForeignSupplierUpdate(ForeignSupplier fsupplier)
+        public int SupplierUpdate(Supplier supplier)
         {
             MySqlCommand cmd = new MySqlCommand();
-            string sql = "UPDATE suplier SET CompanyName = '" + fsupplier.companyNameValue + "',  ContactNo= '" + fsupplier.contactValue + "', Address = '" + fsupplier.add + "', Country='" + fsupplier.countryValue + "',Email='" + fsupplier.emailValue + "', ReferenceName='" + fsupplier.refNameValue + "' ";
+            string sql = "UPDATE suplier SET CompanyName = '" + supplier.companyNameValue + "',  ContactNo= '" + supplier.contactValue + "', Address = '" + supplier.add + "', Country='" + supplier.countryValue + "',Email='" + supplier.emailValue + "', ReferenceName='" + supplier.refNameValue + "' ";
 
             return new DatabaseConnection().Query(sql);
         }
 
-        public int ForeignSupplierDelete(ForeignSupplier fsupplier)
+        public int SupplierDelete(Supplier supplier)
         {
             throw new NotImplementedException();
         }
 
-        public ForeignSupplier ForeignSupplierSearch(int supplierId)
+        public Supplier SupplierSearch(int supplierId)
         {
-            ForeignSupplier fsupplier = new ForeignSupplier();
+            Supplier supplier = new Supplier();
             DatabaseConnection db = new DatabaseConnection();
 
-            string sql = "SELECT * FROM supplier WHERE SupplierId = '"+fsupplier.supIdValue+"'";
+            string sql = "SELECT * FROM supplier WHERE SupplierId = '"+supplier.supIdValue+"'";
             DataTable table = db.SearchQuery(sql);
-            fsupplier.companyNameValue = table.Rows[0][1].ToString();
-            fsupplier.contactValue = table.Rows[0][2].ToString();
-            fsupplier.add = table.Rows[0][3].ToString();
-            fsupplier.countryValue = table.Rows[0][4].ToString();
-            fsupplier.emailValue = table.Rows[0][5].ToString();
-            fsupplier.refNameValue = table.Rows[0][6].ToString();
+            supplier.companyNameValue = table.Rows[0][1].ToString();
+            supplier.contactValue = table.Rows[0][2].ToString();
+            supplier.add = table.Rows[0][3].ToString();
+            supplier.countryValue = table.Rows[0][4].ToString();
+            supplier.emailValue = table.Rows[0][5].ToString();
+            supplier.refNameValue = table.Rows[0][6].ToString();
 
-            return fsupplier;
-
+            return supplier;
         }
+
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //public int ForeignSupplierSave(ForeignSupplier fsupplier)
+        //{
+        //    MySqlCommand cmd = new MySqlCommand();
+        //    string sql = "INSERT INTO supplier VALUES('" + fsupplier.supIdValue + "','" + fsupplier.companyNameValue + "','" + fsupplier.contactValue + "', '" + fsupplier.add + "', '" + fsupplier.countryValue + "', '" + fsupplier.emailValue + "', '" + fsupplier.refNameValue + "') ";
+
+        //    return new DatabaseConnection().Query(sql);
+        //}
+
+        //public int ForeignSupplierUpdate(ForeignSupplier fsupplier)
+        //{
+        //    MySqlCommand cmd = new MySqlCommand();
+        //    string sql = "UPDATE suplier SET CompanyName = '" + fsupplier.companyNameValue + "',  ContactNo= '" + fsupplier.contactValue + "', Address = '" + fsupplier.add + "', Country='" + fsupplier.countryValue + "',Email='" + fsupplier.emailValue + "', ReferenceName='" + fsupplier.refNameValue + "' ";
+
+        //    return new DatabaseConnection().Query(sql);
+        //}
+
+        //public int ForeignSupplierDelete(ForeignSupplier fsupplier)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public ForeignSupplier ForeignSupplierSearch(int supplierId)
+        //{
+        //    ForeignSupplier fsupplier = new ForeignSupplier();
+        //    DatabaseConnection db = new DatabaseConnection();
+
+        //    string sql = "SELECT * FROM supplier WHERE SupplierId = '"+fsupplier.supIdValue+"'";
+        //    DataTable table = db.SearchQuery(sql);
+        //    fsupplier.companyNameValue = table.Rows[0][1].ToString();
+        //    fsupplier.contactValue = table.Rows[0][2].ToString();
+        //    fsupplier.add = table.Rows[0][3].ToString();
+        //    fsupplier.countryValue = table.Rows[0][4].ToString();
+        //    fsupplier.emailValue = table.Rows[0][5].ToString();
+        //    fsupplier.refNameValue = table.Rows[0][6].ToString();
+
+        //    return fsupplier;
+
+        //}
     }
 }

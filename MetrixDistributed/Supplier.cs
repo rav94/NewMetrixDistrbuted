@@ -18,6 +18,7 @@ namespace MetrixDistributed
         private string contact;
         private string refName;
         private string email;
+        private string country;
 
         public int supIdValue
         {
@@ -88,6 +89,18 @@ namespace MetrixDistributed
             set
             {
                 address = value;
+            }
+        }
+
+        public string countryValue
+        {
+            get
+            {
+                return this.country;
+            }
+            set
+            {
+                country = value;
             }
         }
         

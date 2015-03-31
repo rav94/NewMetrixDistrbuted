@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetrixDistributed
+namespace MetrixDistributedHost
 {
-    class ForeignSupplier : Supplier
+    class Program
     {
-        
+        static void Main(string[] args)
+        {
 
-        
+        }
     }
 }

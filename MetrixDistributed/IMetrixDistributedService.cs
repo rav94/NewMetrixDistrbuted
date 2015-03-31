@@ -17,7 +17,7 @@ namespace MetrixDistributed
     }
 
     [ServiceContract]
-    public interface ICustomerService
+    public interface ICustomerServices
     {
         [OperationContract]
         int CustomerSave(Customer customer);
@@ -34,7 +34,7 @@ namespace MetrixDistributed
 
   
     [ServiceContract]
-    public interface IEmployeeService
+    public interface IEmployeeServices
         {
             [OperationContract]
             int EmployeeSave(Employee employee);
@@ -50,7 +50,7 @@ namespace MetrixDistributed
         }
 
     [ServiceContract]
-    public interface IProductService
+    public interface IProductServices
     {
         [OperationContract]
         int ProductSave(Product product);
@@ -66,7 +66,7 @@ namespace MetrixDistributed
     }
 
     [ServiceContract]
-    public interface ISupplierService
+    public interface ISupplierServices
     {
         [OperationContract]
         int SupplierSave(Supplier supplier);
