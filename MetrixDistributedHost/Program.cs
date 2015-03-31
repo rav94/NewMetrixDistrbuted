@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ServiceModel;
 
 namespace MetrixDistributedHost
 {
@@ -10,7 +11,12 @@ namespace MetrixDistributedHost
     {
         static void Main(string[] args)
         {
-
+            using (ServiceHost host = new ServiceHost(typeof(MetrixDistributed.MetrixDistributedService)))
+            {
+                host.Open();
+                Console.WriteLine("The Metrix Distrbuted Service started at : " +DateTime.Now.ToString());
+                Console.ReadLine();
+            }
         }
     }
 }
